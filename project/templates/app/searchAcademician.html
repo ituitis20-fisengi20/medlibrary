@@ -1,0 +1,22 @@
+{% extends 'app/base.html' %}
+{% block title %}Search {% endblock%}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form | crispy}}
+    <button type="submit">Search</button>
+</form>
+
+{% if academicians %}
+    <h2>Search Results:</h2>
+    <ul>
+        {% for academician in academicians %}
+            <li>İsim: {{ academician.name }}</li>
+            
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

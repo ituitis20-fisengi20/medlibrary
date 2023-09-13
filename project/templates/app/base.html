@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+           <div> 
+                
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/anasayfa">Anasayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/akademisyen_ekle">Hoca ekleme</a>
+                </li>         
+                <li class="nav-item">
+                    <a class="nav-link" href="/akademisyen_ara">Hoca arama</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ders_ekle">Ders Ekle</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="/ders_notlari">Ders Notları</a>
+                </li>     
+                </ul>
+                    
+                
+            </div>
+            <div> 
+                
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if user.is_authenticated %}
+                <span class="nav-text"><a class="nav-link" aria-current="page" href="/profile">{{ user.username }}</a></span>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/cikis_yap">Çıkış Yap</a>
+                </li> 
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/giris_yap">Giriş Yap</a>
+                </li>
+                {% endif %}          
+                </ul>
+                    
+                
+            </div>
+        </div>
+      </nav>
+    <div class="container"> 
+        {% block body %}{% endblock %}
+    </div>
+</body>
+</html>

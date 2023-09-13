@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+{% block title %} Ders Notları {% endblock%}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="row">
+    <div class="col">
+        <form method="post">
+            {% csrf_token %}
+            {{ form |crispy }}
+            <button type="submit">Seasarch</button>
+        </form>
+        
+    </div>
+</div> 
+{% if lessons %}
+    
+        <div class="row">
+            <div class="col">
+                <ul>
+                    {% for lesson in lessons %}
+                    {%if lesson.copy_or_note == 'copy'%}                       
+                        <li><strong>Ders:</strong> {{ lesson.get_name_display}} {{lesson.lesson_year}}<strong>Not mu Çıkmış mı? </strong>{{ lesson.get_copy_or_note_display}}</li>
+                                   
+                    {%endif%}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col">
+                <ul>
+                    {% for lesson in lessons %}
+                    {%if lesson.copy_or_note == 'note'%}                       
+                    <li><strong>Ders:</strong> {{ lesson.get_name_display}} {{lesson.lesson_year}}<strong>Not mu Çıkmış mı? </strong>{{ lesson.get_copy_or_note_display}}</li>            
+                    {%endif%} 
+                    {% endfor %}           
+                    
+                </ul>
+            </div>
+                    
+        </div>
+    
+{% endif %}
+
+
+{% endblock %}
+

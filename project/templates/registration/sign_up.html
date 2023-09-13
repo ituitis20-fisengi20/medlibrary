@@ -1,0 +1,10 @@
+{% extends 'app/base.html' %}
+{% block title %} Kayıt Ol {% endblock%}
+{% load crispy_forms_tags %}
+{% block body %} 
+<form method="post">
+    {% csrf_token %}{{form|crispy}}
+<p> Hesabınız var mı? <a href="/sign_up">Giriş Yap </a></p>
+<button type="submit" class="btn btn-success"> Kayıt ol </button>
+</form>
+{% endblock %}
