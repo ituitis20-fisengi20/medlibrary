@@ -2,28 +2,36 @@
 {% block title %} Ders Notları {% endblock%}
 {% load crispy_forms_tags %}
 {% block body %}
-<div class="row">
-    <div class="col">
-        <form method="post">
-            {% csrf_token %}
-            {{ form |crispy }}
-            <button type="submit">Seasarch</button>
-        </form>
-        
+{% csrf_token %}
+{{ form|crispy }}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col">
+            {{ form.search_query_lesson.label_tag }}
+            {{ form.search_query_lesson }}
+        </div>
+        <div class="col">
+            {{ form.search_query_copy_or_note.label_tag }}
+            {{ form.search_query_copy_or_note }}
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
     </div>
-</div> 
+</form>
 {% if lessons %}
 
         <div>
-            <table>
+            <table class="table table-striped">
                 
                 <tr>
-                    <th>title</th>
-                    <th>name</th>
-                    <th>class_year</th>
-                    <th>lesson_year</th>
-                    <th>academician</th>
-                    <th>copy_or_note</th>
+                    <th scope="col">title</th>
+                    <th scope="col">name</th>
+                    <th scope="col">class_year</th>
+                    <th scope="col">lesson_year</th>
+                    <th scope="col">academician</th>
+                    <th scope="col">copy_or_note</th>
                      
                 </tr>
                 {% for lesson in lessons %}
@@ -39,26 +47,28 @@
             </table>  
         </div>
         <!-- Display pagination links -->
-        <div class="pagination">
-            <span class="step-links">
+        <nav aria-label="...">
+            <ul class="pagination">
                 {% if lessons.has_previous %}
-                    <a href="?page=1"> 1</a>
-                    {% if lessons.has_previous != 1 %}
-                        <a href="?page={{ lessons.previous_page_number }}">{{ lessons.previous_page_number }}</a>
+                    {% if lessons.previous_page_number != 1 %}
+                        <li class="page-item"><a class="page-link" href="?page=1"> 1</a></li>
                     {% endif %}
-                {% endif %}
-
-                <span class="current-page">{{ lessons.number }}</span>
-
-                {% if lessons.has_next %}
-                    {% if lessons.has_next !=  11 %}
-                        <a href="?page={{ lessons.next_page_number }}">{{ lessons.next_page_number }}</a>
-                    {% endif %}
-                    <a href="?page={{ lessons.paginator.num_pages }}">{{ lessons.paginator.num_pages }} </a>
+                    <li class="page-item"><a class="page-link" href="?page={{ lessons.previous_page_number }}">{{ lessons.previous_page_number }}</a></li>
                     
                 {% endif %}
-            </span>
-        </div>
+
+                
+                <li class="page-item active"><span class="sr-only page-link">{{ lessons.number }}</span></li>
+
+                {% if lessons.has_next %}
+                    
+                    <li class="page-item"><a class="page-link" href="?page={{ lessons.next_page_number }}">{{ lessons.next_page_number }}</a></li>
+                    {% if lessons.next_page_number  !=  lessons.paginator.num_pages%}
+                        <li class="page-item"><a class="page-link" href="?page={{ lessons.paginator.num_pages }}">{{ lessons.paginator.num_pages }} </a></li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </nav>
     
 {% endif %}
 

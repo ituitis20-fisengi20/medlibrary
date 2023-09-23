@@ -159,7 +159,6 @@ class SearchLessonForm(forms.Form):
     )
     search_query_copy_or_note = forms.ChoiceField(
         choices=COPY_OR_NOTE,  
-        required=False,      
     )
 
     def __init__(self, *args, **kwargs):
