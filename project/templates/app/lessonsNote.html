@@ -13,29 +13,51 @@
     </div>
 </div> 
 {% if lessons %}
-    
-        <div class="row">
-            <div class="col">
-                <ul>
-                    {% for lesson in lessons %}
-                    {%if lesson.copy_or_note == 'copy'%}                       
-                        <li><strong>Ders:</strong> {{ lesson.get_name_display}} {{lesson.lesson_year}}<strong>Not mu Çıkmış mı? </strong>{{ lesson.get_copy_or_note_display}}</li>
-                                   
-                    {%endif%}
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="col">
-                <ul>
-                    {% for lesson in lessons %}
-                    {%if lesson.copy_or_note == 'note'%}                       
-                    <li><strong>Ders:</strong> {{ lesson.get_name_display}} {{lesson.lesson_year}}<strong>Not mu Çıkmış mı? </strong>{{ lesson.get_copy_or_note_display}}</li>            
-                    {%endif%} 
-                    {% endfor %}           
+
+        <div>
+            <table>
+                
+                <tr>
+                    <th>title</th>
+                    <th>name</th>
+                    <th>class_year</th>
+                    <th>lesson_year</th>
+                    <th>academician</th>
+                    <th>copy_or_note</th>
+                     
+                </tr>
+                {% for lesson in lessons %}
+                <tr>
+                    <td>{{ lesson.title}}</td>
+                    <td>{{ lesson.get_name_display}}</td>
+                    <td>{{ lesson.class_year}}</td>
+                    <td>{{ lesson.lesson_year}}</td>
+                    <td>{{ lesson.academician}}</td> 
+                    <td>{{ lesson.get_copy_or_note_display}}</td> 
+                </tr>
+                {% endfor %}
+            </table>  
+        </div>
+        <!-- Display pagination links -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if lessons.has_previous %}
+                    <a href="?page=1"> 1</a>
+                    {% if lessons.has_previous != 1 %}
+                        <a href="?page={{ lessons.previous_page_number }}">{{ lessons.previous_page_number }}</a>
+                    {% endif %}
+                {% endif %}
+
+                <span class="current-page">{{ lessons.number }}</span>
+
+                {% if lessons.has_next %}
+                    {% if lessons.has_next !=  11 %}
+                        <a href="?page={{ lessons.next_page_number }}">{{ lessons.next_page_number }}</a>
+                    {% endif %}
+                    <a href="?page={{ lessons.paginator.num_pages }}">{{ lessons.paginator.num_pages }} </a>
                     
-                </ul>
-            </div>
-                    
+                {% endif %}
+            </span>
         </div>
     
 {% endif %}

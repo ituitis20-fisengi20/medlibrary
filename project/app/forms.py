@@ -37,6 +37,11 @@ LESSON_CHOICES = (
     ("29", "BASIC STATISTICS"),
 )
 
+COPY_OR_NOTE = ( 
+    ("copy", "Çıkmış"),
+    ("note", "Ders Notu")
+)
+
 
 def checkUni(value):
     at_index = value.find("@")
@@ -148,15 +153,19 @@ class LessonForm(forms.ModelForm):
 
 
 class SearchLessonForm(forms.Form):
-    search_query = forms.ChoiceField(
-        choices=LESSON_CHOICES,  # We'll populate this dynamically in the form's __init__ method
-        required=False,
-        widget=forms.Select(attrs={'class': 'form-control'})  # Optional widget to style the select element
+    search_query_lesson = forms.ChoiceField(
+        choices=LESSON_CHOICES, 
+        required=False,      
+    )
+    search_query_copy_or_note = forms.ChoiceField(
+        choices=COPY_OR_NOTE,  
+        required=False,      
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['search_query'].choices = [('', '---------')] + self.get_lesson_choices()
+        self.fields['search_query_lesson'].choices = [('', '---------')] + self.get_lesson_choices()
+        
 
     def get_lesson_choices(self):
         lesson_names = Lesson.objects.values_list('name', flat=True).distinct()

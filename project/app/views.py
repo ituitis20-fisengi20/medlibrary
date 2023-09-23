@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from app.models import *
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -78,13 +79,22 @@ def lesson_notes(request):
 
     if request.method == 'POST':
         form = SearchLessonForm(request.POST)
+        
         if form.is_valid():
-            search_query = request.POST.get('search_query', '')
-            lessons = Lesson.objects.filter(name=search_query).order_by('lesson_year')
+            selected_lesson = request.POST.get('search_query_lesson', '')
+            selected_copy_or_note = request.POST.get('search_query_copy_or_note', '')
+            lessons = Lesson.objects.filter(name=selected_lesson, copy_or_note= selected_copy_or_note).order_by('lesson_year')
             
     else:
         form = SearchLessonForm()
         lessons = Lesson.objects.all().order_by('-lesson_year')
-        print(lessons)
+
+    paginator = Paginator(lessons,10)
+
+    # Get the current page number from the request's GET parameters
+    page_number = request.GET.get('page')
+
+    # Get the courses for the current page
+    lessons = paginator.get_page(page_number)
         
     return render(request, 'app/lessonsNote.html',{'form':form, 'lessons':lessons})
