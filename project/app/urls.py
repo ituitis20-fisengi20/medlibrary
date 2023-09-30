@@ -16,5 +16,6 @@ urlpatterns = [
     path('ders_ekle/', views.add_lesson),
     path('ders_notlari/', views.lesson_notes),
     path('temp/', views.temp),
+    path('confirm_email/<uidb64>/<token>/', views.confirm_email, name='confirm_email'),
     
 ]

@@ -43,12 +43,12 @@ COPY_OR_NOTE = (
 )
 
 
-def checkUni(value):
+"""def checkUni(value):
     at_index = value.find("@")
     if at_index != -1 and at_index < len(value) - 18 and value[at_index:].find("stu.istinye.edu.tr") != -1 :
         print("okay")
     else:
-        raise forms.ValidationError("Üniversite mailiniz uygun değildir")
+        raise forms.ValidationError("Üniversite mailiniz uygun değildir")"""
         
 
 class RegisterForm(UserCreationForm):
@@ -73,7 +73,7 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].help_text = ""
         self.fields['email'].help_text = "Sadece üniversite mailinizle kayıt olabilirsiniz. Üniversiteniz sistemde kayıtlı değilse siteye kayıt olamazsınız. Üniversite eklemesi yapmak için bize ulaşın."
 
-    email = forms.EmailField(required=True,validators=[checkUni])
+    #email = forms.EmailField(required=True,validators=[checkUni])
     class Meta:
         model = User
         fields = ["username", "email", "password1","password2"]
