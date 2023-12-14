@@ -163,7 +163,7 @@ class SearchLessonForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['search_query_lesson'].choices = [('', '---------')] + self.get_lesson_choices()
+        self.fields['search_query_lesson'].choices = [('any', 'Any')] + self.get_lesson_choices()
         
 
     def get_lesson_choices(self):

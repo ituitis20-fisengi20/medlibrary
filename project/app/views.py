@@ -133,7 +133,11 @@ def lesson_notes(request):
         if form.is_valid():
             selected_lesson = request.POST.get('search_query_lesson', '')
             selected_copy_or_note = request.POST.get('search_query_copy_or_note', '')
-            lessons = Lesson.objects.filter(name=selected_lesson, copy_or_note= selected_copy_or_note).order_by('lesson_year')
+            lessons = Lesson.objects
+            if selected_lesson != 'any':
+                lessons = lessons.filter(name=selected_lesson)
+            lessons = lessons.filter(copy_or_note=selected_copy_or_note)
+            lessons.order_by('lesson_year')
             
     else:
         form = SearchLessonForm()
